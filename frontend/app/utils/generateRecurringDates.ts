@@ -4,7 +4,6 @@ import {
   addMonths,
   addYears,
   isAfter,
-  setDate,
   startOfMonth,
 } from 'date-fns';
 
@@ -69,7 +68,6 @@ export function generateRecurringDates({
         
       case 'nthWeekday':
         // Find nth occurrence of the weekday in the month
-        const monthStart = startOfMonth(current);
         let weekdayCount = 0;
         
         // Create a new date object to avoid modifying current

@@ -19,6 +19,7 @@ router.post('/register', async (req, res) => {
     console.log('User created:', rows[0]);
     res.status(201).json({ message: 'User created', user: rows[0] });
   } catch (err) {
+    console.error('Database error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -48,6 +49,7 @@ router.post('/login', async (req, res) => {
     console.log('User logged in:', user);
     res.json({ message: 'Login successful' });
   } catch (err) {
+    console.error('Database error:', err);
     console.error('Login error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }

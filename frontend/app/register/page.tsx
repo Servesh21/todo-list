@@ -9,10 +9,11 @@ export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleRegister = async () => {
-    const response = await registerUser(email, password);
+    console.log('Registering user:', { name, email, password });
+    const res = await registerUser(email, password);
+    console.log('Response from register:', res);
   };
 
   return (
@@ -23,8 +24,6 @@ export default function RegisterPage() {
         </button>
 
         <h2 className="text-2xl font-semibold mb-4">Register</h2>
-
-        {error && <p className="text-red-600">{error}</p>}
 
         <form className="space-y-4" onSubmit={handleRegister}>
           <input

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Calendar, CheckSquare, Bell, Clock, BarChart, Users } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -108,10 +109,13 @@ export default function LandingPage() {
               <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-100 rounded-full opacity-50"></div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-indigo-100 rounded-full opacity-50"></div>
               <div className="bg-white p-4 rounded-2xl shadow-2xl border border-gray-100 relative z-10">
-                <img 
+                <Image 
                   src="/image.png" 
                   alt="Taskify Dashboard Preview" 
                   className="rounded-xl w-full"
+                  width={600}
+                  height={400}
+                  priority
                 />
               </div>
             </div>

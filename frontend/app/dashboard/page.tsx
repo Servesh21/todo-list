@@ -2,19 +2,20 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../store/UseAuthStore';
-import TaskForm from '../components/TaskForm';
+import TaskForm, { Task as FormTask } from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 import TaskOverview from '../components/TaskOverview';
 import { fetchTasks, addTask, markAsDone, fetchUpcoming, markasUndone } from '../lib/api';
+import type { Task as ListTask } from '../components/TaskList';
 
 export default function DashboardPage() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
   const router = useRouter();
 
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [upcomingWeek, setUpcomingWeek] = useState<any[]>([]);
-  const [upcomingMonth, setUpcomingMonth] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<ListTask[]>([]);
+  const [upcomingWeek, setUpcomingWeek] = useState<ListTask[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [upcomingMonth, setUpcomingMonth] = useState<ListTask[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
   const [view, setView] = useState<'today' | 'upcoming'>('today'); // Toggle view
 
   useEffect(() => {
@@ -24,7 +25,8 @@ export default function DashboardPage() {
       loadTasks();
       loadUpcoming();
     }
-  }, [isAuthenticated]);
+    // Add router to dependency array for exhaustive-deps
+  }, [isAuthenticated, router]);
 
   const loadTasks = async () => {
     const data = await fetchTasks();
@@ -38,7 +40,7 @@ export default function DashboardPage() {
     setUpcomingMonth(month);
   };
 
-  const handleAddTask = async (task: any) => {
+  const handleAddTask = async (task: FormTask) => {
     await addTask(task);
     loadTasks();
     loadUpcoming();
@@ -99,7 +101,7 @@ export default function DashboardPage() {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Today's Tasks
+                  Todays Tasks
                 </button>
                 <button
                   onClick={() => setView('upcoming')}

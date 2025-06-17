@@ -72,7 +72,21 @@ function MiniCalendar({ month, year, highlightDates = [] }: { month: number; yea
   );
 }
 
-export default function TaskForm({ onAdd }: { onAdd: (task: any) => void }) {
+export type Task = {
+  id?: number;
+  title: string;
+  startDate: Date | null;
+  recurrenceType: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'weekday' | 'nthWeekday';
+  interval: number;
+  endDate: Date | null;
+  selectedWeekdays: number[];
+  nthWeek: number;
+  nthWeekday: number;
+  completed?: boolean;
+  // Add any other backend fields as needed
+};
+
+export default function TaskForm({ onAdd }: { onAdd: (task: Task) => void }) {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [recurrenceType, setRecurrenceType] = useState<'none' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'weekday' | 'nthWeekday'>('none');
@@ -215,7 +229,7 @@ export default function TaskForm({ onAdd }: { onAdd: (task: any) => void }) {
         <label className="block text-sm font-medium text-gray-700 mb-1">Recurrence</label>
         <select
           value={recurrenceType}
-          onChange={(e) => setRecurrenceType(e.target.value as any)}
+          onChange={(e) => setRecurrenceType(e.target.value as Task['recurrenceType'])}
           className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="none">No Recurrence</option>

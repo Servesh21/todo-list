@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: DockerFile
+    ports:
+      - "5000:5000"
+    working_dir: /app
+    volumes:
+      - ./Backend:/app
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=todoapp
+    depends_on:
+      - postgres
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: taskify
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

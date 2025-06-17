@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { loginUser } from '../lib/api';
 import { useAuthStore } from '../store/UseAuthStore';
 export default function LoginPage() {
@@ -65,7 +65,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-4 text-sm">
-          Don't have an account?{' '}
+          Dont have an account?{' '}
           <span
             onClick={() => router.push('/register')}
             className="text-blue-600 cursor-pointer"

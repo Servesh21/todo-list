@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Calendar, dateFnsLocalizer, Event } from 'react-big-calendar';
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import { 
   format, 
   parse, 
@@ -54,7 +54,7 @@ export default function TaskOverview() {
 
         // Convert to calendar events
         const calendarEvents: CalendarEvent[] = [];
-        allTasks.forEach((task: { upcomingDates: any[]; title: any; }) => {
+        allTasks.forEach((task: { upcomingDates: string[]; title: string; }) => {
           task.upcomingDates.forEach(dateStr => {
             const date = parseISO(dateStr);
             calendarEvents.push({
@@ -104,7 +104,7 @@ export default function TaskOverview() {
   const currentMonthDisplay = format(currentDate, 'MMMM yyyy');
 
   // Custom event styling
-  const eventStyleGetter = (event: any) => {
+  const eventStyleGetter = () => {
     return {
       style: {
         backgroundColor: '#4f46e5',

@@ -1,10 +1,10 @@
 'use client';
 
 import { deleteTask } from '../lib/api';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Check, X, Trash2, RefreshCw, Calendar, Clock, AlertCircle } from 'lucide-react';
 
-interface Task {
+export interface Task {
   id: number;
   title: string;
   start_date: string | Date;
@@ -25,8 +25,6 @@ export default function TaskList({
   markasundone: (id: number) => void;
   onDelete?: (id: number) => void;
 }) {
-  if (!Array.isArray(tasks)) return <p>Invalid task data</p>;
-  
   const [filter, setFilter] = useState<'all' | 'pending' | 'completed'>('all');
   const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
   const [isCollapsed, setIsCollapsed] = useState({
@@ -34,6 +32,8 @@ export default function TaskList({
     completed: false
   });
 
+  if (!Array.isArray(tasks)) return <p>Invalid task data</p>;
+  
   const pending = tasks.filter((task) => !task.completed);
   const completed = tasks.filter((task) => task.completed);
 

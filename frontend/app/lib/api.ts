@@ -1,5 +1,8 @@
 const API_BASE = 'http://localhost:5000/api/tasks';
 
+// Reuse Task type from TaskForm
+import type { Task } from '../components/TaskForm';
+
 export async function fetchTasks() {
   const res = await fetch(API_BASE, {
     method: 'GET',
@@ -8,7 +11,7 @@ export async function fetchTasks() {
   return res.json();
 }
 
-export async function addTask(task: any) {
+export async function addTask(task: Task) {
   const res = await fetch(API_BASE, {
     method: 'POST',
     credentials: 'include',
@@ -55,7 +58,7 @@ export const deleteTask = async (id: number) => {
   return data;
 };
 
-export const loginUser = async (email: any, password: any) => {
+export const loginUser = async (email: string, password: string) => {
   const res = await fetch('http://localhost:5000/api/auth/login', {
     method: 'POST',
     credentials: 'include',
@@ -68,7 +71,8 @@ export const loginUser = async (email: any, password: any) => {
   return await res.json();
 };
 
-export const registerUser = async (email: any, password: any) => {
+export const registerUser = async (email: string, password: string) => {
+  console.log('Registering user:', { email, password });
   const res = await fetch('http://localhost:5000/api/auth/register', {
     method: 'POST',
     credentials: 'include',
@@ -77,6 +81,7 @@ export const registerUser = async (email: any, password: any) => {
     },
     body: JSON.stringify({ email, password }),
   });
+  console.log('Response from registerUser:', res);
 
   return await res.json();
 };
